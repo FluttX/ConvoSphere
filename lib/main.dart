@@ -1,5 +1,5 @@
 import 'package:convo_sphere/core/theme.dart';
-import 'package:convo_sphere/feature/chat/presentation/ui/chat_page.dart';
+import 'package:convo_sphere/feature/authentication/presentation/ui/register_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ConvoSphere',
       theme: AppTheme.darkTheme,
-      home: const ChatPage(),
+      home: const RegisterPage(),
     );
   }
 }
