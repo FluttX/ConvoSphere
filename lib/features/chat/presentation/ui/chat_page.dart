@@ -1,6 +1,6 @@
-import 'package:convo_sphere/feature/chat/presentation/widgets/message_input.dart';
-import 'package:convo_sphere/feature/chat/presentation/widgets/receive_message.dart';
-import 'package:convo_sphere/feature/chat/presentation/widgets/send_message.dart';
+import 'package:convo_sphere/features/chat/presentation/widgets/message_input.dart';
+import 'package:convo_sphere/features/chat/presentation/widgets/receive_message.dart';
+import 'package:convo_sphere/features/chat/presentation/widgets/send_message.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {

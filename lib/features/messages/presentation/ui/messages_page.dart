@@ -1,6 +1,6 @@
 import 'package:convo_sphere/core/theme.dart';
-import 'package:convo_sphere/feature/messages/presentation/widgets/message_tile.dart';
-import 'package:convo_sphere/feature/messages/presentation/widgets/recent_contact.dart';
+import 'package:convo_sphere/features/messages/presentation/widgets/message_tile.dart';
+import 'package:convo_sphere/features/messages/presentation/widgets/recent_contact.dart';
 import 'package:flutter/material.dart';
 
 class MessagesPage extends StatelessWidget {
