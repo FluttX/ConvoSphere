@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:convo_sphere/core/services/scoket_service.dart';
+import 'package:convo_sphere/core/services/socket_service.dart';
 import 'package:convo_sphere/features/chat/domain/entities/message_entity.dart';
 import 'package:convo_sphere/features/chat/domain/usecase/fetch_messages_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
