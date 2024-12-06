@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:convo_sphere/core/app_constants.dart';
 import 'package:convo_sphere/features/authentication/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthRemoteDataSource {
-  final String _baseUrl = 'http://192.168.20.219:6000/api/auth';
+  final String _baseUrl = '${AppConstants.baseUrl}/api/auth';
 
   Future<UserModel?> login({
     required String email,

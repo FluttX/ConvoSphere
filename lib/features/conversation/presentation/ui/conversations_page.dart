@@ -1,4 +1,5 @@
 import 'package:convo_sphere/core/theme.dart';
+import 'package:convo_sphere/features/chat/presentation/ui/chat_page.dart';
 import 'package:convo_sphere/features/conversation/presentation/bloc/conversations_bloc.dart';
 import 'package:convo_sphere/features/conversation/presentation/widgets/message_tile.dart';
 import 'package:convo_sphere/features/conversation/presentation/widgets/no_conversation_found.dart';
@@ -110,6 +111,17 @@ class _ConversationsPageState extends State<ConversationsPage> {
                       itemCount: conversations.length,
                       itemBuilder: (context, index) {
                         return MessageTileWidget(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ChatPage(
+                                  name: conversations[index].participantName,
+                                  conversationId: conversations[index].id,
+                                ),
+                              ),
+                            );
+                          },
                           name: conversations[index].participantName,
                           imageUrl:
                               'https://randomuser.me/api/portraits/men/1.jpg',

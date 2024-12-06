@@ -49,6 +49,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       if (user != null) {
         _storage.write(key: 'token', value: user.token);
+        _storage.write(key: 'userId', value: user.id);
         emit(AuthSuccess(message: 'Login Successfully'));
       } else {
         emit(AuthFailure(error: 'Login Failed'));

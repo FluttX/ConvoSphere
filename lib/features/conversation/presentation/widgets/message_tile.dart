@@ -7,14 +7,17 @@ class MessageTileWidget extends StatelessWidget {
     required this.imageUrl,
     required this.message,
     required this.time,
+    this.onTap,
   });
 
   final String name, imageUrl, message;
   final DateTime time;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       leading: CircleAvatar(
         radius: 30,

@@ -2,7 +2,14 @@ import 'package:convo_sphere/core/theme.dart';
 import 'package:flutter/material.dart';
 
 class MessageInputWidget extends StatelessWidget {
-  const MessageInputWidget({super.key});
+  const MessageInputWidget({
+    super.key,
+    required this.controller,
+    this.onSendPressed,
+  });
+
+  final TextEditingController controller;
+  final Function()? onSendPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +26,19 @@ class MessageInputWidget extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(Icons.camera_alt, color: Colors.grey),
           ),
-          const Expanded(
+          Expanded(
             child: TextField(
-              decoration: InputDecoration(
+              controller: controller,
+              decoration: const InputDecoration(
                 hintText: 'Message',
                 hintStyle: TextStyle(color: Colors.grey),
                 border: InputBorder.none,
               ),
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: onSendPressed,
             icon: const Icon(Icons.send, color: Colors.grey),
           ),
         ],
