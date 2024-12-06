@@ -9,7 +9,8 @@ class MessageTileWidget extends StatelessWidget {
     required this.time,
   });
 
-  final String name, imageUrl, message, time;
+  final String name, imageUrl, message;
+  final DateTime time;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class MessageTileWidget extends StatelessWidget {
         style: const TextStyle(color: Colors.grey),
       ),
       trailing: Text(
-        time,
+        time.toIso8601String(),
         style: const TextStyle(color: Colors.grey),
       ),
     );

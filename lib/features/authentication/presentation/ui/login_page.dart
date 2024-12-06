@@ -74,8 +74,8 @@ class _LoginPageState extends State<LoginPage> {
                     );
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      '/messages',
-                      ModalRoute.withName('/'),
+                      '/conversations',
+                      (route) => false,
                     );
                   } else if (state is AuthFailure) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                 text: 'Don\'t have an account?',
                 pressableText: 'Click here to register',
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/register');
                 },
               )
             ],
