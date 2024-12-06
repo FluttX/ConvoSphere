@@ -5,7 +5,7 @@ import 'package:convo_sphere/features/authentication/data/models/user_model.dart
 import 'package:http/http.dart' as http;
 
 class AuthRemoteDataSource {
-  final String _baseUrl = 'http://192.168.20.233:6000/auth';
+  final String _baseUrl = 'http://192.168.20.219:6000/auth';
 
   Future<UserModel?> login({
     required String email,
@@ -19,7 +19,7 @@ class AuthRemoteDataSource {
       );
 
       log(
-        '${response.request?.method} - ${response.request?.url} - ${response.statusCode}'
+        '\n\n${response.request?.method} - ${response.request?.url} - ${response.statusCode}'
         '\nRESULT: ${response.body}\n\n',
         name: 'API',
       );
@@ -53,7 +53,7 @@ class AuthRemoteDataSource {
       );
 
       log(
-        '${response.request?.method} - ${response.request?.url} - ${response.statusCode}'
+        '\n\n${response.request?.method} - ${response.request?.url} - ${response.statusCode}'
         '\nRESULT: ${response.body}\n\n',
         name: 'API',
       );
