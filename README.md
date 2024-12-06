@@ -67,7 +67,7 @@ This architecture promotes separation of concerns, testability, and scalability.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ConvoSphere.git
+   git clone https://github.com/FluttX/ConvoSphere.git
    ```
 
 2. Navigate to the project directory:
