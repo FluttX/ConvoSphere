@@ -11,6 +11,12 @@ import 'package:convo_sphere/features/chat/data/repositories/messages_repository
 import 'package:convo_sphere/features/chat/domain/usecase/fetch_messages_use_case.dart';
 import 'package:convo_sphere/features/chat/presentation/bloc/messages_bloc.dart';
 import 'package:convo_sphere/features/chat/presentation/ui/chat_page.dart';
+import 'package:convo_sphere/features/contacts/data/datasource/remote/contacts_remote_data_source.dart';
+import 'package:convo_sphere/features/contacts/data/repositories/contacts_repository_impl.dart';
+import 'package:convo_sphere/features/contacts/domain/repositories/contacts_repository.dart';
+import 'package:convo_sphere/features/contacts/domain/usecase/add_contact_use_case.dart';
+import 'package:convo_sphere/features/contacts/domain/usecase/fetch_contacts_use_case.dart';
+import 'package:convo_sphere/features/contacts/presentation/bloc/contacts_bloc.dart';
 import 'package:convo_sphere/features/conversation/data/datasource/remote/conversation_remote_data_source.dart';
 import 'package:convo_sphere/features/conversation/data/repositories/conversations_repository_impl.dart';
 import 'package:convo_sphere/features/conversation/domain/repositories/conversations_repository.dart';
@@ -37,11 +43,15 @@ void main() async {
   final messageRepository = MessagesRepositoryImpl(
     remoteDataSource: MessagesRemoteDataSource(),
   );
+  final contactsRepository = ContactsRepositoryImpl(
+    remoteDataSource: ContactsRemoteDataSource(),
+  );
 
   runApp(MyApp(
     authRepository: authRepository,
     conversationRepository: conversationRepository,
     messagesRepository: messageRepository,
+    contactsRepository: contactsRepository,
   ));
 }
 
@@ -51,11 +61,13 @@ class MyApp extends StatelessWidget {
     required this.authRepository,
     required this.conversationRepository,
     required this.messagesRepository,
+    required this.contactsRepository,
   });
 
   final AuthRepository authRepository;
   final ConversationsRepository conversationRepository;
   final MessagesRepository messagesRepository;
+  final ContactsRepository contactsRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +90,16 @@ class MyApp extends StatelessWidget {
           create: (_) => MessagesBloc(
             messagesUseCase: FetchMessagesUseCase(
               repository: messagesRepository,
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => ContactsBloc(
+            fetchContactsUseCase: FetchContactsUseCase(
+              repository: contactsRepository,
+            ),
+            addContactUseCase: AddContactUseCase(
+              repository: contactsRepository,
             ),
           ),
         ),

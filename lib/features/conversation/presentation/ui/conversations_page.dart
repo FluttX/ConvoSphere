@@ -1,5 +1,6 @@
 import 'package:convo_sphere/core/theme.dart';
 import 'package:convo_sphere/features/chat/presentation/ui/chat_page.dart';
+import 'package:convo_sphere/features/contacts/presentation/ui/contacts_page.dart';
 import 'package:convo_sphere/features/conversation/presentation/bloc/conversations_bloc.dart';
 import 'package:convo_sphere/features/conversation/presentation/widgets/message_tile.dart';
 import 'package:convo_sphere/features/conversation/presentation/widgets/no_conversation_found.dart';
@@ -139,6 +140,16 @@ class _ConversationsPageState extends State<ConversationsPage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ContactsPage()),
+          );
+        },
+        backgroundColor: DefaultColors.buttonColor,
+        child: const Icon(Icons.contacts),
       ),
     );
   }
