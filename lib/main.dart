@@ -1,3 +1,4 @@
+import 'package:convo_sphere/core/services/socket_service.dart';
 import 'package:convo_sphere/core/theme.dart';
 import 'package:convo_sphere/features/authentication/data/datasource/remote/auth_remote_data_source.dart';
 import 'package:convo_sphere/features/authentication/data/repositories/auth_repository_impl.dart';
@@ -23,8 +24,12 @@ import 'features/chat/domain/repositories/messages_repository.dart';
 import 'features/conversation/domain/usecase/fetch_conversations_use_case.dart';
 import 'features/conversation/presentation/bloc/conversations_bloc.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final socketService = SocketService();
+  await socketService.initSocket();
+
   final authRepository = AuthRepositoryImpl(dataSource: AuthRemoteDataSource());
   final conversationRepository = ConversationsRepositoryImpl(
     dataSource: ConversationRemoteDataSource(),
