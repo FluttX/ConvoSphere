@@ -3,7 +3,6 @@ import 'package:convo_sphere/features/contacts/domain/entities/contact_entity.da
 class ContactModel extends ContactEntity {
   ContactModel({
     required super.id,
-    required super.userId,
     required super.username,
     required super.email,
   });
@@ -11,7 +10,6 @@ class ContactModel extends ContactEntity {
   factory ContactModel.fromJson(Map<String, dynamic> json) {
     return ContactModel(
       id: json['contact_id'],
-      userId: json['user_id'],
       username: json['username'],
       email: json['email'],
     );

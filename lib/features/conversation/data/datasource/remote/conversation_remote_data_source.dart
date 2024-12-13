@@ -35,4 +35,39 @@ class ConversationRemoteDataSource {
       throw Exception('Failed to fetch conversations');
     }
   }
+
+  Future<String> checkOrCreateConversation(String contactId) async {
+    try {
+      String token = await _storage.read(key: 'token') ?? '';
+      final response = await http.post(
+        Uri.parse('$_baseUrl/conversations/check-or-create'),
+        body: jsonEncode({'contactId': contactId}),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      log(
+        '${response.request?.method} - ${response.request?.url} - ${response.statusCode}'
+        '\nRESULT: ${response.body}\n\n',
+        name: 'API',
+      );
+
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body);
+
+        if (body != null && body['conversationId'] != null) {
+          return body['conversationId'].toString();
+        } else {
+          throw Exception('Invalid response structure');
+        }
+      } else {
+        throw Exception('Failed to check or create conversation');
+      }
+    } catch (e) {
+      log('- ${e.toString()}', name: 'ERROR');
+      throw Exception('Failed to check or create conversation');
+    }
+  }
 }

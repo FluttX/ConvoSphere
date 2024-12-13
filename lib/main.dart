@@ -20,6 +20,7 @@ import 'package:convo_sphere/features/contacts/presentation/bloc/contacts_bloc.d
 import 'package:convo_sphere/features/conversation/data/datasource/remote/conversation_remote_data_source.dart';
 import 'package:convo_sphere/features/conversation/data/repositories/conversations_repository_impl.dart';
 import 'package:convo_sphere/features/conversation/domain/repositories/conversations_repository.dart';
+import 'package:convo_sphere/features/conversation/domain/usecase/check_or_create_conversation_use_case.dart';
 import 'package:convo_sphere/features/conversation/presentation/ui/conversations_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +39,7 @@ void main() async {
 
   final authRepository = AuthRepositoryImpl(dataSource: AuthRemoteDataSource());
   final conversationRepository = ConversationsRepositoryImpl(
-    dataSource: ConversationRemoteDataSource(),
+    remoteDataSource: ConversationRemoteDataSource(),
   );
   final messageRepository = MessagesRepositoryImpl(
     remoteDataSource: MessagesRemoteDataSource(),
@@ -100,6 +101,9 @@ class MyApp extends StatelessWidget {
             ),
             addContactUseCase: AddContactUseCase(
               repository: contactsRepository,
+            ),
+            checkOrCreateConversationUseCase: CheckOrCreateConversationUseCase(
+              repository: conversationRepository,
             ),
           ),
         ),

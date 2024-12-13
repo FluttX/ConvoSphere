@@ -1,3 +1,4 @@
+import 'package:convo_sphere/features/chat/presentation/ui/chat_page.dart';
 import 'package:convo_sphere/features/contacts/presentation/bloc/contacts_bloc.dart';
 import 'package:convo_sphere/features/conversation/presentation/widgets/no_conversation_found.dart';
 import 'package:flutter/material.dart';
@@ -30,38 +31,68 @@ class _ContactsPageState extends State<ContactsPage> {
         elevation: 0,
         toolbarHeight: 70,
       ),
-      body: BlocBuilder<ContactsBloc, ContactsState>(
-        builder: (context, state) {
-          if (state is ContactsLoading) {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          } else if (state is ContactsLoaded) {
-            return ListView.builder(
-              itemCount: state.contacts.length,
-              itemBuilder: (context, index) {
-                final contact = state.contacts[index];
-                return ListTile(
-                  title: Text(
-                    contact.username,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  subtitle: Text(
-                    contact.email,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context, contact);
-                  },
-                );
-              },
-            );
-          } else if (state is ContactsError) {
-            return Center(child: Text(state.message));
-          }
+      body: BlocListener<ContactsBloc, ContactsState>(
+        listener: (context, state) async {
+          final contactBloc = BlocProvider.of<ContactsBloc>(context);
 
-          return const NoConversationFound();
+          if (state is ConversationReady) {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ChatPage(
+                  name: state.contactName,
+                  conversationId: state.conversationId,
+                ),
+              ),
+            );
+
+            if (result == null) {
+              contactBloc.add(FetchContactsEvent());
+            }
+          } else if (state is ConversationFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          }
         },
+        child: BlocBuilder<ContactsBloc, ContactsState>(
+          builder: (context, state) {
+            if (state is ContactsLoading) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            } else if (state is ContactsLoaded) {
+              return ListView.builder(
+                itemCount: state.contacts.length,
+                itemBuilder: (context, index) {
+                  final contact = state.contacts[index];
+                  return ListTile(
+                    title: Text(
+                      contact.username,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    subtitle: Text(
+                      contact.email,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    onTap: () {
+                      BlocProvider.of<ContactsBloc>(context).add(
+                        CheckOrCreateConversationEvent(
+                          contact.id,
+                          contact.username,
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            } else if (state is ContactsError) {
+              return Center(child: Text(state.message));
+            }
+
+            return const NoConversationFound();
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

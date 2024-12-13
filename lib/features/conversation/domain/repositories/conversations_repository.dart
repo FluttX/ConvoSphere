@@ -2,4 +2,6 @@ import 'package:convo_sphere/features/conversation/domain/entities/conversation_
 
 abstract class ConversationsRepository {
   Future<List<ConversationEntity>> fetchConversations();
+
+  Future<String> checkOrCreateConversation(String contactId);
 }

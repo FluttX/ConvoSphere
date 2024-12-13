@@ -9,3 +9,10 @@ class AddContactsEvent extends ContactsEvent {
 
   final String email;
 }
+
+class CheckOrCreateConversationEvent extends ContactsEvent {
+  CheckOrCreateConversationEvent(this.contactId, this.contactName);
+
+  final String contactId;
+  final String contactName;
+}
