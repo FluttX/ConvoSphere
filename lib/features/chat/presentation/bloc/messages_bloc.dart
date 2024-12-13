@@ -36,6 +36,8 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
         _messages.addAll(messages);
         emit(MessageLoadedState(List.from(_messages)));
 
+        _socketService.socket.off('newMessage');
+
         _socketService.socket.emit('joinConversation', event.conversationId);
         _socketService.socket.on(
           'newMessage',
