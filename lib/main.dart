@@ -24,6 +24,7 @@ import 'package:convo_sphere/features/conversation/domain/usecase/check_or_creat
 import 'package:convo_sphere/features/conversation/presentation/ui/conversations_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'features/authentication/presentation/ui/login_page.dart';
 import 'features/authentication/presentation/ui/register_page.dart';
@@ -32,6 +33,7 @@ import 'features/conversation/domain/usecase/fetch_conversations_use_case.dart';
 import 'features/conversation/presentation/bloc/conversations_bloc.dart';
 
 void main() async {
+  await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
 
   final socketService = SocketService();
