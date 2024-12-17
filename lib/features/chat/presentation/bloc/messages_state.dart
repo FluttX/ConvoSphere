@@ -17,3 +17,9 @@ class MessagesErrorState extends MessagesState {
 
   final String message;
 }
+
+class DailyQuestionLoadedSate extends MessagesState {
+  DailyQuestionLoadedSate(this.dailyQuestionEntity);
+
+  final DailyQuestionEntity dailyQuestionEntity;
+}

@@ -8,6 +8,7 @@ import 'package:convo_sphere/features/authentication/domain/usecases/register_us
 import 'package:convo_sphere/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:convo_sphere/features/chat/data/datasource/remote/messages_remote_data_source.dart';
 import 'package:convo_sphere/features/chat/data/repositories/messages_repository_impl.dart';
+import 'package:convo_sphere/features/chat/domain/usecase/fetch_daily_question_use_case.dart';
 import 'package:convo_sphere/features/chat/domain/usecase/fetch_messages_use_case.dart';
 import 'package:convo_sphere/features/chat/presentation/bloc/messages_bloc.dart';
 import 'package:convo_sphere/features/chat/presentation/ui/chat_page.dart';
@@ -92,6 +93,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => MessagesBloc(
             messagesUseCase: FetchMessagesUseCase(
+              repository: messagesRepository,
+            ),
+            dailyQuestionUseCase: FetchDailyQuestionUseCase(
               repository: messagesRepository,
             ),
           ),

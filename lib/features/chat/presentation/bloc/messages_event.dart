@@ -20,3 +20,9 @@ class ReceiveMessageEvent extends MessagesEvent {
 
   final Map<String, dynamic> messages;
 }
+
+class LoadDailyQuestionEvent extends MessagesEvent {
+  LoadDailyQuestionEvent(this.conversationId);
+
+  final String conversationId;
+}

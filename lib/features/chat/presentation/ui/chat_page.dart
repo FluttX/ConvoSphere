@@ -1,4 +1,6 @@
+import 'package:convo_sphere/core/app_constants.dart';
 import 'package:convo_sphere/features/chat/presentation/bloc/messages_bloc.dart';
+import 'package:convo_sphere/features/chat/presentation/widgets/daily_question_message.dart';
 import 'package:convo_sphere/features/chat/presentation/widgets/message_input.dart';
 import 'package:convo_sphere/features/chat/presentation/widgets/receive_message.dart';
 import 'package:convo_sphere/features/chat/presentation/widgets/send_message.dart';
@@ -44,6 +46,9 @@ class _ChatPageState extends State<ChatPage> {
     BlocProvider.of<MessagesBloc>(context).add(
       LoadMessagesEvent(widget.conversationId),
     );
+    /*BlocProvider.of<MessagesBloc>(context).add(
+      LoadDailyQuestionEvent(widget.conversationId),
+    );*/
 
     fetchUserId();
   }
@@ -103,8 +108,16 @@ class _ChatPageState extends State<ChatPage> {
                     itemBuilder: (context, index) {
                       final message = state.messages[index];
                       final isSendMessage = message.senderId == userId;
+
+                      final isDailyQuestion =
+                          message.senderId == AppConstants.aiBotId;
+
                       if (isSendMessage) {
                         return SendMessageWidget(message: message.content);
+                      } else if (isDailyQuestion) {
+                        return DailyQuestionMessageWidget(
+                          message: message.content,
+                        );
                       } else {
                         return ReceiveMessageWidget(message: message.content);
                       }

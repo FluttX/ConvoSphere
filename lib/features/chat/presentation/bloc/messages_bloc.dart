@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:convo_sphere/core/services/socket_service.dart';
+import 'package:convo_sphere/features/chat/domain/entities/daily_question_entity.dart';
 import 'package:convo_sphere/features/chat/domain/entities/message_entity.dart';
+import 'package:convo_sphere/features/chat/domain/usecase/fetch_daily_question_use_case.dart';
 import 'package:convo_sphere/features/chat/domain/usecase/fetch_messages_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -11,15 +13,22 @@ part 'messages_event.dart';
 part 'messages_state.dart';
 
 class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
-  MessagesBloc({required this.messagesUseCase}) : super(MessagesInitial()) {
+  MessagesBloc({
+    required this.messagesUseCase,
+    required this.dailyQuestionUseCase,
+  }) : super(MessagesInitial()) {
     on<LoadMessagesEvent>(_onLoadMessages);
     on<SendMessageEvent>(_onSendMessage);
     on<ReceiveMessageEvent>(_onReceiveMessage);
+    on<LoadDailyQuestionEvent>(_onLoadDailyQuestion);
   }
 
-  final FetchMessagesUseCase messagesUseCase;
   final _storage = const FlutterSecureStorage();
   final _socketService = SocketService();
+
+  final FetchMessagesUseCase messagesUseCase;
+  final FetchDailyQuestionUseCase dailyQuestionUseCase;
+
   final List<MessageEntity> _messages = [];
 
   Future<void> _onLoadMessages(
@@ -85,5 +94,22 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
 
     _messages.add(message);
     emit(MessageLoadedState(List.from(_messages)));
+  }
+
+  Future<void> _onLoadDailyQuestion(
+    LoadDailyQuestionEvent event,
+    Emitter<MessagesState> emit,
+  ) async {
+    try {
+      emit(MessageLoadingState());
+
+      final dailyQuestion = await dailyQuestionUseCase.call(
+        event.conversationId,
+      );
+
+      emit(DailyQuestionLoadedSate(dailyQuestion));
+    } catch (e) {
+      emit(MessagesErrorState('Failed to load daily question'));
+    }
   }
 }
