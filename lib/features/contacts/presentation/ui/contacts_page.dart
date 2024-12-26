@@ -63,10 +63,15 @@ class _ContactsPageState extends State<ContactsPage> {
                 child: CircularProgressIndicator.adaptive(),
               );
             } else if (state is ContactsLoaded) {
+              if (state.contacts.isEmpty) {
+                return const NoConversationFound();
+              }
+
               return ListView.builder(
                 itemCount: state.contacts.length,
                 itemBuilder: (context, index) {
                   final contact = state.contacts[index];
+
                   return ListTile(
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(contact.profileImage),
@@ -91,7 +96,7 @@ class _ContactsPageState extends State<ContactsPage> {
               return Center(child: Text(state.message));
             }
 
-            return const NoConversationFound();
+            return const SizedBox();
           },
         ),
       ),

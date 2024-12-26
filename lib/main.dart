@@ -30,6 +30,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'features/authentication/presentation/ui/login_page.dart';
 import 'features/authentication/presentation/ui/register_page.dart';
 import 'features/chat/domain/repositories/messages_repository.dart';
+import 'features/contacts/domain/usecase/fetch_recent_contacts_use_case.dart';
 import 'features/conversation/domain/usecase/fetch_conversations_use_case.dart';
 import 'features/conversation/presentation/bloc/conversations_bloc.dart';
 
@@ -103,6 +104,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => ContactsBloc(
             fetchContactsUseCase: FetchContactsUseCase(
+              repository: contactsRepository,
+            ),
+            recentContactsUseCase: FetchRecentContactsUseCase(
               repository: contactsRepository,
             ),
             addContactUseCase: AddContactUseCase(

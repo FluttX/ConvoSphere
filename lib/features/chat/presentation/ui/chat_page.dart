@@ -1,4 +1,4 @@
-import 'package:convo_sphere/core/app_constants.dart';
+import 'package:convo_sphere/core/constants/app_constants.dart';
 import 'package:convo_sphere/features/chat/presentation/bloc/messages_bloc.dart';
 import 'package:convo_sphere/features/chat/presentation/widgets/daily_question_message.dart';
 import 'package:convo_sphere/features/chat/presentation/widgets/message_input.dart';

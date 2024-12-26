@@ -41,3 +41,17 @@ final class ConversationFailed extends ContactsState {
 
   final String message;
 }
+
+final class RecentContactsLoading extends ContactsState {}
+
+final class RecentContactsLoaded extends ContactsState {
+  RecentContactsLoaded(this.recentContacts);
+
+  final List<ContactEntity> recentContacts;
+}
+
+final class RecentContactsError extends ContactsState {
+  RecentContactsError(this.message);
+
+  final String message;
+}

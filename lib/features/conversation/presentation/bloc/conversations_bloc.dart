@@ -10,13 +10,15 @@ part 'conversations_event.dart';
 part 'conversations_state.dart';
 
 class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
-  ConversationsBloc({required this.conversationsUseCase})
-      : super(ConversationsInitial()) {
+  ConversationsBloc({
+    required FetchConversationsUseCase conversationsUseCase,
+  })  : _conversationsUseCase = conversationsUseCase,
+        super(ConversationsInitial()) {
     on<FetchConversationsEvent>(_onFetchConversations);
     _initializeSocketListener();
   }
 
-  final FetchConversationsUseCase conversationsUseCase;
+  final FetchConversationsUseCase _conversationsUseCase;
   final SocketService _socketService = SocketService();
 
   void _initializeSocketListener() {
@@ -37,7 +39,7 @@ class ConversationsBloc extends Bloc<ConversationsEvent, ConversationsState> {
     emit(ConversationsLoading());
 
     try {
-      final conversations = await conversationsUseCase.call();
+      final conversations = await _conversationsUseCase.call();
       emit(ConversationsLoaded(conversations));
     } catch (e) {
       emit(ConversationsError(e.toString()));

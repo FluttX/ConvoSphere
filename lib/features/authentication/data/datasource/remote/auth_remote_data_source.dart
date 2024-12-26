@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:convo_sphere/core/app_constants.dart';
+import 'package:convo_sphere/core/constants/app_constants.dart';
 import 'package:convo_sphere/features/authentication/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
 

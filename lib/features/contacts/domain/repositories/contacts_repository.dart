@@ -4,4 +4,6 @@ abstract class ContactsRepository {
   Future<List<ContactEntity>> fetchContacts();
 
   Future<String> addContact(String email);
+
+  Future<List<ContactEntity>> fetchRecentContacts();
 }

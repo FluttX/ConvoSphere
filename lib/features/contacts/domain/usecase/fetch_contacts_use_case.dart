@@ -6,7 +6,7 @@ class FetchContactsUseCase {
 
   final ContactsRepository repository;
 
-  Future<List<ContactEntity>> call() async {
-    return await repository.fetchContacts();
+  Future<List<ContactEntity>> call() {
+    return repository.fetchContacts();
   }
 }

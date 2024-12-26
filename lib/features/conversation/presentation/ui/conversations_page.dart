@@ -1,5 +1,6 @@
 import 'package:convo_sphere/core/theme.dart';
 import 'package:convo_sphere/features/chat/presentation/ui/chat_page.dart';
+import 'package:convo_sphere/features/contacts/presentation/bloc/contacts_bloc.dart';
 import 'package:convo_sphere/features/contacts/presentation/ui/contacts_page.dart';
 import 'package:convo_sphere/features/conversation/presentation/bloc/conversations_bloc.dart';
 import 'package:convo_sphere/features/conversation/presentation/widgets/message_tile.dart';
@@ -19,6 +20,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<ContactsBloc>(context).add(FetchRecentContactsEvent());
     BlocProvider.of<ConversationsBloc>(context).add(FetchConversationsEvent());
   }
 
@@ -51,38 +53,33 @@ class _ConversationsPageState extends State<ConversationsPage> {
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
-          Container(
-            height: 100,
-            padding: const EdgeInsets.all(5),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                RecentContactWidget(
-                  name: 'Alice Johnson',
-                  imageUrl: 'https://randomuser.me/api/portraits/women/1.jpg',
-                ),
-                RecentContactWidget(
-                  name: 'Bob Smith',
-                  imageUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
-                ),
-                RecentContactWidget(
-                  name: 'Charlie Brown',
-                  imageUrl: 'https://randomuser.me/api/portraits/men/2.jpg',
-                ),
-                RecentContactWidget(
-                  name: 'Diana Prince',
-                  imageUrl: 'https://randomuser.me/api/portraits/women/2.jpg',
-                ),
-                RecentContactWidget(
-                  name: 'Edward Norton',
-                  imageUrl: 'https://randomuser.me/api/portraits/men/3.jpg',
-                ),
-                RecentContactWidget(
-                  name: 'Fiona Gallagher',
-                  imageUrl: 'https://randomuser.me/api/portraits/women/3.jpg',
-                ),
-              ],
-            ),
+          BlocBuilder<ContactsBloc, ContactsState>(
+            builder: (context, state) {
+              if (state is RecentContactsLoading) {
+                return const CircularProgressIndicator.adaptive();
+              } else if (state is RecentContactsLoaded) {
+                return Container(
+                  height: 100,
+                  padding: const EdgeInsets.all(5),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: state.recentContacts.length,
+                    itemBuilder: (context, index) {
+                      final contact = state.recentContacts[index];
+                      return RecentContactWidget(
+                        name: contact.username,
+                        imageUrl: contact.profileImage,
+                      );
+                    },
+                  ),
+                );
+              } else if (state is RecentContactsError) {
+                return Center(child: Text(state.message));
+              }
+
+              return const SizedBox();
+            },
           ),
           const SizedBox(height: 10.0),
           Expanded(
@@ -143,11 +140,16 @@ class _ConversationsPageState extends State<ConversationsPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          await Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const ContactsPage()),
-          );
+          ).then((_) {
+            if (!context.mounted) return;
+
+            BlocProvider.of<ContactsBloc>(context)
+                .add(FetchRecentContactsEvent());
+          });
         },
         backgroundColor: DefaultColors.buttonColor,
         child: const Icon(Icons.contacts),

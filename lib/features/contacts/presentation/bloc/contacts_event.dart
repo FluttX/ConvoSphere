@@ -4,6 +4,8 @@ abstract class ContactsEvent {}
 
 class FetchContactsEvent extends ContactsEvent {}
 
+class FetchRecentContactsEvent extends ContactsEvent {}
+
 class AddContactsEvent extends ContactsEvent {
   AddContactsEvent(this.email);
 

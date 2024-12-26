@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:convo_sphere/core/app_constants.dart';
+import 'package:convo_sphere/core/constants/app_constants.dart';
 import 'package:convo_sphere/features/chat/data/models/daily_question_model.dart';
 import 'package:convo_sphere/features/chat/data/models/message_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

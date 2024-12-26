@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:convo_sphere/core/app_constants.dart';
+import 'package:convo_sphere/core/constants/app_constants.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
