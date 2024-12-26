@@ -4,6 +4,7 @@ class ContactModel extends ContactEntity {
   ContactModel({
     required super.id,
     required super.username,
+    required super.profileImage,
     required super.email,
   });
 
@@ -11,6 +12,7 @@ class ContactModel extends ContactEntity {
     return ContactModel(
       id: json['contact_id'],
       username: json['username'],
+      profileImage: json['profile_image'],
       email: json['email'],
     );
   }

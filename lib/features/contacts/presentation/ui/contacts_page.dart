@@ -42,6 +42,7 @@ class _ContactsPageState extends State<ContactsPage> {
                 builder: (_) => ChatPage(
                   name: state.contactName,
                   conversationId: state.conversationId,
+                  profileImage: state.contactImage,
                 ),
               ),
             );
@@ -67,6 +68,9 @@ class _ContactsPageState extends State<ContactsPage> {
                 itemBuilder: (context, index) {
                   final contact = state.contacts[index];
                   return ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(contact.profileImage),
+                    ),
                     title: Text(
                       contact.username,
                       style: Theme.of(context).textTheme.titleMedium,
@@ -77,10 +81,7 @@ class _ContactsPageState extends State<ContactsPage> {
                     ),
                     onTap: () {
                       BlocProvider.of<ContactsBloc>(context).add(
-                        CheckOrCreateConversationEvent(
-                          contact.id,
-                          contact.username,
-                        ),
+                        CheckOrCreateConversationEvent(contact),
                       );
                     },
                   );

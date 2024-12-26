@@ -123,7 +123,8 @@ class MyApp extends StatelessWidget {
           '/login': (_) => const LoginPage(),
           '/register': (_) => const RegisterPage(),
           '/conversations': (_) => const ConversationsPage(),
-          '/chat': (_) => const ChatPage(conversationId: '', name: ''),
+          '/chat': (_) =>
+              const ChatPage(conversationId: '', name: '', profileImage: ''),
         },
       ),
     );

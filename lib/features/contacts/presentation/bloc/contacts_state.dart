@@ -25,10 +25,15 @@ final class ContactAdded extends ContactsState {
 }
 
 final class ConversationReady extends ContactsState {
-  ConversationReady({required this.conversationId, required this.contactName});
+  ConversationReady({
+    required this.conversationId,
+    required this.contactName,
+    required this.contactImage,
+  });
 
   final String conversationId;
   final String contactName;
+  final String contactImage;
 }
 
 final class ConversationFailed extends ContactsState {

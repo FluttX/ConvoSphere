@@ -118,14 +118,15 @@ class _ConversationsPageState extends State<ConversationsPage> {
                               MaterialPageRoute(
                                 builder: (_) => ChatPage(
                                   name: conversations[index].participantName,
+                                  profileImage:
+                                      conversations[index].participantImage,
                                   conversationId: conversations[index].id,
                                 ),
                               ),
                             );
                           },
                           name: conversations[index].participantName,
-                          imageUrl:
-                              'https://randomuser.me/api/portraits/men/1.jpg',
+                          imageUrl: conversations[index].participantImage,
                           message: conversations[index].lastMessage,
                           time: conversations[index].lastMessageTime,
                         );

@@ -5,6 +5,7 @@ class UserModel extends UserEntity {
     required super.id,
     required super.email,
     required super.username,
+    required super.profileImage,
     required super.token,
   });
 
@@ -13,6 +14,7 @@ class UserModel extends UserEntity {
       id: json['id'],
       email: json['email'],
       username: json['username'],
+      profileImage: json['profile_image'],
       token: json['token'],
     );
   }

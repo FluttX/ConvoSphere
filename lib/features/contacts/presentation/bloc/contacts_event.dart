@@ -11,8 +11,7 @@ class AddContactsEvent extends ContactsEvent {
 }
 
 class CheckOrCreateConversationEvent extends ContactsEvent {
-  CheckOrCreateConversationEvent(this.contactId, this.contactName);
+  CheckOrCreateConversationEvent(this.contactEntity);
 
-  final String contactId;
-  final String contactName;
+  final ContactEntity contactEntity;
 }

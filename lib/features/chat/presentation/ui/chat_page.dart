@@ -10,9 +10,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key, required this.name, required this.conversationId});
+  const ChatPage({
+    super.key,
+    required this.name,
+    required this.profileImage,
+    required this.conversationId,
+  });
 
   final String name;
+  final String profileImage;
   final String conversationId;
 
   @override
@@ -65,11 +71,7 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         title: Row(
           children: [
-            const CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://randomuser.me/api/portraits/men/1.jpg',
-              ),
-            ),
+            CircleAvatar(backgroundImage: NetworkImage(widget.profileImage)),
             const SizedBox(width: 10.0),
             Text(
               widget.name,

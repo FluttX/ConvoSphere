@@ -58,11 +58,12 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
     emit(ContactsLoading());
     try {
       final conversationId = await checkOrCreateConversationUseCase.call(
-        event.contactId,
+        event.contactEntity.id,
       );
       emit(ConversationReady(
         conversationId: conversationId,
-        contactName: event.contactName,
+        contactName: event.contactEntity.username,
+        contactImage: event.contactEntity.profileImage,
       ));
     } catch (e) {
       emit(ConversationFailed('Failed to check or create conversation'));
